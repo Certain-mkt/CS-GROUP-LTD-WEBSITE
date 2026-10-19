@@ -1,0 +1,9 @@
+# Original site backup — kept on disk, not in version control
+backup-site-20261019-1547.zip
+backup-site-20261019-1547/
+
+# OS and editor noise
+Thumbs.db
+Desktop.ini
+.DS_Store
+*.tmp

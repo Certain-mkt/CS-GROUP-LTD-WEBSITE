@@ -1,0 +1,10 @@
+# Current Security Group Ltd
+# Replace the placeholder domain before launch.
+
+User-agent: *
+Allow: /
+
+# The printable company profile is not a search landing page.
+Disallow: /profile.html
+
+Sitemap: https://replace-domain.example/sitemap.xml
