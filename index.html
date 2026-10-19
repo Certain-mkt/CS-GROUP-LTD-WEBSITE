@@ -96,8 +96,8 @@
   <div class="container utility__inner">
     <p class="utility__group utility__group--offices"><span class="utility__dot" aria-hidden="true"></span> 24/7 control room · Nairobi &amp; Bungoma</p>
     <div class="utility__group">
-      <span>Emergency</span>
-      <a href="tel:+254737334449">0737&nbsp;334&nbsp;449</a>
+      <span class="text--urgency">Emergency</span>
+      <a href="tel:+254737334449" class="text--urgency">0737&nbsp;334&nbsp;449</a>
       <span aria-hidden="true">/</span>
       <a href="contact.html">Contact</a>
     </div>
@@ -149,11 +149,11 @@
 
 <main id="main">
 
-  <section class="hero">
+  <section class="hero hero--backdrop">
     <div class="hero__media" aria-hidden="true">
       <picture>
         <source type="image/webp" srcset="assets/img/hero-guards-900.webp 900w, assets/img/hero-guards-1600.webp 1600w" sizes="100vw">
-        <img src="assets/img/hero-guards-900.jpg" srcset="assets/img/hero-guards-900.jpg 900w, assets/img/hero-guards-1600.jpg 1600w" sizes="100vw" alt="" width="1600" height="634" fetchpriority="high" decoding="async">
+        <img src="assets/img/hero-guards-900.jpg" srcset="assets/img/hero-guards-900.jpg 900w, assets/img/hero-guards-1600.jpg 1600w" sizes="100vw" alt="Current Security guards on parade" width="1600" height="634" fetchpriority="high" decoding="async">
       </picture>
     </div>
     <div class="container hero__grid">
@@ -165,33 +165,59 @@
           <a class="btn btn--accent" href="contact.html">Request a site survey</a>
           <a class="btn btn--outline-light" href="services.html">Explore services</a>
         </div>
-        <dl class="hero__facts">
-          <div><dt>Takeover</dt><dd>12 hours</dd></div>
-          <div><dt>Supervision</dt><dd>3 checks / shift</dd></div>
-          <div><dt>Control room</dt><dd>24/7</dd></div>
-        </dl>
       </div>
+    </div>
+  </section>
+
+  <section class="stats-banner" aria-label="Service stats">
+    <div class="container">
+      <dl class="stats-grid">
+        <div class="stat">
+          <dt>Takeover</dt>
+          <dd>12 hours</dd>
+          <span>Smooth handover from your previous provider</span>
+        </div>
+        <div class="stat">
+          <dt>Supervision</dt>
+          <dd>3 checks / shift</dd>
+          <span>Day and night, every post</span>
+        </div>
+        <div class="stat">
+          <dt>Control room</dt>
+          <dd>24/7</dd>
+          <span>Radio network and emergency response</span>
+        </div>
+        <div class="stat">
+          <dt>Licence</dt>
+          <dd>PSRA/CSL/19/90</dd>
+          <span>Private Security Regulatory Authority</span>
+        </div>
+      </dl>
     </div>
   </section>
 
   <section class="trust" aria-label="Accreditations and cover">
     <div class="container trust__grid">
       <div class="trust__item">
+        <span class="icon icon--success" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M22 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9 9-4.03 9-9Zm-9 9c-4.48 0-8.17-3.65-8.17-8.17 0-3.25 1.94-6.01 4.74-7.46L3.76 7.46l1.41-1.41L9 8.34l5.66-2.83 1.41 1.41L9 11.17l6.83 3.41 1.41-1.41L9 9.76l-5.24-2.62 1.41-1.41L9 7.34 3.76 8.75l1.41 1.41L9 10.17l2.83 1.41c2.8 1.45 4.74 4.21 4.74 7.46C17.17 15.35 13.48 19 9 19Z"/></svg></span>
         <span>Regulator</span>
         <strong>PSRA licensed</strong>
         <p>Corporate licence PSRA/CSL/19/90. Guards vetted to Private Security Regulatory Authority criteria.</p>
       </div>
       <div class="trust__item">
+        <span class="icon icon--success" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2c5.52 0 10 4.48 10 10s-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2Zm-2 15l-5-5 1.41-1.41L10 14.17l7.79-7.79 1.41 1.41L10 16.99l10.5-10.5-1.41-1.41L10 16.17 3.29 9.46 1.88 10.87l5.59 5.59Z"/></svg></span>
         <span>Association</span>
         <strong>PROSAK member</strong>
         <p>Protective Security Association of Kenya.</p>
       </div>
       <div class="trust__item">
+        <span class="icon icon--success" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2Zm1 15h-2v-6h2v6Zm0-8h-2V7h2v2Z"/></svg></span>
         <span>Cover</span>
         <strong>Fully insured</strong>
         <p>Fire, theft, burglary, WIBA and contractual cover.</p>
       </div>
       <div class="trust__item">
+        <span class="icon icon--urgency" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2L1 21h22L12 2Zm1 14h-2v-6h2v6Zm0-8h-2V7h2v2Z"/></svg></span>
         <span>Operations</span>
         <strong>24/7 control room</strong>
         <p>Radio network, supervision and emergency response.</p>
