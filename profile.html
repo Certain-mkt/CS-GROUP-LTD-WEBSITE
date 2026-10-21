@@ -5,15 +5,884 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Company Profile | Current Security Group Ltd</title>
 <meta name="description" content="Printable company profile for Current Security Group Ltd: services, vetting, supervision, insurance and offices in Nairobi and Bungoma.">
-<meta name="theme-color" content="#305db1">
+<meta name="theme-color" content="#2F5CB0">
 <meta name="robots" content="noindex, follow">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
 <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
 <link rel="manifest" href="site.webmanifest">
-<link rel="preload" href="assets/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
 <script src="assets/js/theme.js"></script>
 <link rel="stylesheet" href="assets/css/style.css">
 <script src="assets/js/main.js" defer></script>
+<style>
+  /* ==========================================================================
+     Company profile — 11-page A4 document, matches reference PDF exactly
+     ========================================================================== */
+  :root {
+    --accent: #2F5CB0;
+    --headings: #0B0F19;
+    --body: #55657C;
+    --captions: #8A95A8;
+    --divider: #D9DFEA;
+    --tableline: #E3E7EE;
+    --cardfill: #F2F6FB;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--body);
+    font-size: 9.5pt;
+    line-height: 1.45;
+    background: #fff;
+  }
+
+  p, h1, h2, h3, h4, ul, ol { margin: 0; }
+  ul { padding-left: 20px; }
+  li { margin-bottom: 4px; }
+
+  /* ---------- Print page setup ---------- */
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  .profile-pages {
+    max-width: 100%;
+    margin: 0;
+  }
+
+  .page {
+    width: 210mm;
+    height: 297mm;
+    box-sizing: border-box;
+    overflow: hidden;
+    page-break-after: always;
+    break-after: page;
+    position: relative;
+    padding: 15mm 16mm 18mm 16mm;
+  }
+
+  .page:last-child { page-break-after: auto; }
+
+  .page-content {
+    position: relative;
+    height: 100%;
+  }
+
+  .page-content p + p {
+    margin-top: 10px;
+  }
+
+  /* ---------- Header / toolbar (screen only) ---------- */
+  .profile-toolbar {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    padding: 14px 24px 10px;
+    border-bottom: 1px solid var(--divider);
+    background: #fff;
+  }
+
+  .profile-toolbar .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 40px;
+    padding: 0 18px;
+    border: 1px solid var(--accent);
+    background: var(--accent);
+    color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .profile-toolbar .btn--outline {
+    background: #fff;
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .profile-toolbar .btn:hover { opacity: 0.9; }
+
+  /* ---------- Customisation form (screen only) ---------- */
+  .profile-form {
+    max-width: 640px;
+    margin: 16px auto 0;
+    padding: 20px 24px;
+    border: 1px solid var(--divider);
+    background: var(--cardfill);
+    border-radius: 6px;
+    display: none;
+  }
+
+  .profile-form.is-visible { display: block; }
+
+  .profile-form h2 {
+    font-size: 1rem;
+    color: var(--headings);
+    margin: 0 0 8px;
+    letter-spacing: 0.5px;
+  }
+
+  .profile-form p.intro {
+    font-size: 0.85rem;
+    color: var(--body);
+    margin: 0 0 16px;
+  }
+
+  .profile-form .field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .profile-form .field {
+    margin-bottom: 0;
+  }
+
+  .profile-form label {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--body);
+    margin-bottom: 5px;
+  }
+
+  .profile-form input {
+    width: 100%;
+    min-height: 36px;
+    padding: 6px 10px;
+    border: 1px solid #b7c3d1;
+    border-radius: 4px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.9rem;
+    color: var(--headings);
+  }
+
+  .profile-form input:focus { border-color: var(--accent); outline: none; }
+
+  .profile-form .actions {
+    margin-top: 14px;
+    display: flex;
+    gap: 10px;
+  }
+
+  .profile-form .btn-sm {
+    min-height: 36px;
+    padding: 0 16px;
+    border: 1px solid var(--accent);
+    background: var(--accent);
+    color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .profile-form .btn-sm--outline {
+    background: #fff;
+    color: var(--accent);
+  }
+
+  .profile-form .form-hint {
+    font-size: 0.75rem;
+    color: var(--body);
+    margin-top: 10px;
+    line-height: 1.4;
+  }
+
+  /* ---------- Section heading ---------- */
+  .section-heading {
+    position: relative;
+    padding-left: 10px;
+    margin: 20px 0 12px;
+    font-size: 15pt;
+    color: var(--headings);
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    border-top: 0.6pt solid var(--divider);
+    padding-top: 8px;
+  }
+
+  .section-heading::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4pt;
+    height: 100%;
+    background: var(--accent);
+  }
+
+  .h3-heading {
+    font-size: 11pt;
+    color: var(--headings);
+    font-weight: 700;
+    margin: 16px 0 8px;
+    padding-left: 10px;
+    border-left: 4pt solid var(--accent);
+    display: inline-block;
+  }
+
+  /* ---------- Cover page (left-aligned, NO Prepared for block) ---------- */
+  .cover {
+    text-align: left;
+    padding-top: 0;
+  }
+
+  .cover .logo {
+    width: 120px;
+    height: auto;
+    display: block;
+    margin: 0 0 14px 0;
+  }
+
+  .cover-eyebrow {
+    font-size: 7.6pt;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--body);
+    font-weight: 700;
+    margin: 0 0 6px;
+    line-height: 1.2;
+    white-space: pre-line;
+  }
+
+  .cover-line {
+    width: 100%;
+    height: 2pt;
+    background: var(--accent);
+    margin: 6px 0 14px;
+    border: none;
+  }
+
+  .cover-headline {
+    font-size: 31pt;
+    color: var(--headings);
+    font-weight: 700;
+    margin: 0 0 8px;
+    line-height: 1.15;
+  }
+
+  .cover-subtitle {
+    font-size: 13pt;
+    color: var(--body);
+    margin: 0 0 24px;
+    line-height: 1.45;
+  }
+
+  .fact-group {
+    margin: 0 0 30px 0;
+    margin-left: 12px;
+  }
+
+  .fact-label {
+    font-size: 7pt;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--headings);
+    font-weight: 700;
+    margin-bottom: 2px;
+    display: block;
+  }
+
+  .fact-value {
+    font-size: 10.6pt;
+    color: var(--body);
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  .cover-image {
+    width: 100%;
+    max-height: 230px;
+    height: auto;
+    display: block;
+    margin: 14px 0 0 0;
+    border: 0.75pt solid var(--divider);
+    object-fit: cover;
+  }
+
+  .cover-caption {
+    font-size: 7pt;
+    color: var(--captions);
+    text-align: center;
+    margin-top: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* ---------- Timeline ---------- */
+  .timeline-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin: 12px 0;
+  }
+
+  .timeline-col {
+    text-align: center;
+  }
+
+  .timeline-year {
+    font-size: 13pt;
+    color: var(--headings);
+    font-weight: 700;
+    margin-bottom: 4px;
+    display: block;
+  }
+
+  .timeline-text {
+    font-size: 7.5pt;
+    color: var(--body);
+    line-height: 1.35;
+  }
+
+  /* ---------- Images ---------- */
+  .img-pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 12px 0;
+  }
+
+  .img-caption {
+    font-size: 7pt;
+    color: var(--captions);
+    text-align: center;
+    margin-top: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .img-wrap {
+    text-align: center;
+  }
+
+  .img-wrap img {
+    max-width: 100%;
+    height: auto;
+    border: 0.75pt solid var(--divider);
+  }
+
+  /* ---------- Cards ---------- */
+  .card-grid {
+    display: grid;
+    gap: 10px;
+    margin: 12px 0;
+    page-break-inside: avoid;
+    align-items: stretch;
+  }
+
+  .card {
+    background: var(--cardfill);
+    border-top: 3pt solid var(--accent);
+    padding: 10px 12px;
+    page-break-inside: avoid;
+    align-self: start;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card-title {
+    font-size: 9pt;
+    color: var(--headings);
+    font-weight: 700;
+    margin-bottom: 5px;
+    display: block;
+  }
+
+  .card-text {
+    font-size: 8pt;
+    color: var(--body);
+    line-height: 1.4;
+    margin: 0;
+    flex: 1;
+  }
+
+  /* Values row (5 cards) */
+  .values-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    margin: 12px 0;
+    page-break-inside: avoid;
+    align-items: stretch;
+  }
+
+  .value-card {
+    background: var(--cardfill);
+    border-top: 3pt solid var(--accent);
+    padding: 8px 10px;
+    text-align: center;
+    page-break-inside: avoid;
+    align-self: stretch;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  .value-num {
+    font-size: 11pt;
+    color: var(--headings);
+    font-weight: 700;
+    margin-bottom: 3px;
+    display: block;
+  }
+
+  .value-name {
+    font-size: 8pt;
+    color: var(--headings);
+    font-weight: 700;
+    margin-bottom: 3px;
+    display: block;
+  }
+
+  .value-desc {
+    font-size: 6.5pt;
+    color: var(--body);
+    line-height: 1.3;
+  }
+
+  /* Objectives 2x2 */
+  .objectives-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 12px 0;
+    page-break-inside: avoid;
+    align-items: stretch;
+  }
+
+  .objective-card {
+    background: var(--cardfill);
+    border-top: 3pt solid var(--accent);
+    padding: 10px 12px;
+    page-break-inside: avoid;
+    align-self: stretch;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .objective-title {
+    font-size: 8.5pt;
+    color: var(--headings);
+    font-weight: 700;
+    margin-bottom: 4px;
+    display: block;
+  }
+
+  .objective-text {
+    font-size: 7.5pt;
+    color: var(--body);
+    line-height: 1.4;
+    margin: 0;
+    flex: 1;
+  }
+
+  /* Services grid */
+  .services-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 10px 0;
+    page-break-inside: avoid;
+    align-items: stretch;
+  }
+
+  .service-card {
+    page-break-inside: avoid;
+    align-self: stretch;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .service-num {
+    font-size: 11pt;
+    color: var(--headings);
+    font-weight: 700;
+    margin-bottom: 3px;
+    display: block;
+  }
+
+  .service-title {
+    font-size: 9pt;
+    color: var(--headings);
+    font-weight: 700;
+    margin-bottom: 3px;
+    display: block;
+  }
+
+  .service-text {
+    font-size: 8pt;
+    color: var(--body);
+    line-height: 1.4;
+    margin: 0;
+    flex: 1;
+  }
+
+  /* Approach panels */
+  .approach-panel {
+    margin: 12px 0;
+    page-break-inside: avoid;
+  }
+
+  .approach-title {
+    font-size: 9pt;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--headings);
+    margin-bottom: 5px;
+    display: block;
+  }
+
+  .foundation-panel {
+    background: var(--cardfill);
+    border-left: 4pt solid var(--accent);
+    padding: 10px 14px;
+    margin-bottom: 10px;
+    page-break-inside: avoid;
+  }
+
+  .foundation-title {
+    font-size: 9pt;
+    color: var(--headings);
+    font-weight: 700;
+    margin-bottom: 4px;
+    display: block;
+  }
+
+  .foundation-text {
+    font-size: 8pt;
+    color: var(--body);
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  /* Takeover steps */
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    margin: 12px 0;
+    page-break-inside: avoid;
+    align-items: stretch;
+  }
+
+  .step-card {
+    background: var(--cardfill);
+    border-top: 3pt solid var(--accent);
+    padding: 8px 10px;
+    text-align: center;
+    page-break-inside: avoid;
+    align-self: stretch;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .step-num {
+    font-size: 10pt;
+    color: var(--headings);
+    font-weight: 700;
+    margin-bottom: 3px;
+    display: block;
+  }
+
+  .step-title {
+    font-size: 6.5pt;
+    color: var(--headings);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 3px;
+    display: block;
+  }
+
+  .step-desc {
+    font-size: 6.5pt;
+    color: var(--body);
+    line-height: 1.25;
+  }
+
+  /* Departments grid */
+  .depts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin: 12px 0;
+    page-break-inside: avoid;
+    align-items: stretch;
+  }
+
+  .dept-card {
+    background: var(--cardfill);
+    border-top: 3pt solid var(--accent);
+    padding: 8px 12px;
+    page-break-inside: avoid;
+    align-self: stretch;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .dept-title {
+    font-size: 8.5pt;
+    color: var(--headings);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+    display: block;
+  }
+
+  .dept-text {
+    font-size: 7.5pt;
+    color: var(--body);
+    line-height: 1.4;
+    margin: 0;
+    flex: 1;
+  }
+
+  /* Tables — horizontal lines only, no vertical borders */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0;
+    page-break-inside: avoid;
+  }
+
+  .data-table th {
+    font-size: 6.5pt;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--body);
+    font-weight: 700;
+    text-align: left;
+    padding: 5px 8px;
+    border-bottom: 2pt solid var(--accent);
+    border-bottom: 1pt solid var(--tableline);
+  }
+
+  .data-table th:last-child { border-right: none; }
+
+  .data-table td {
+    font-size: 9pt;
+    color: var(--body);
+    padding: 5px 8px;
+    border-bottom: 0.5pt solid var(--tableline);
+    vertical-align: top;
+    border-right: none;
+    border-left: none;
+    border-top: none;
+  }
+
+  .data-table td:last-child { border-right: none; }
+
+  .data-table td.num { text-align: right; }
+
+  .data-table .total-row td {
+    font-weight: 700;
+    color: var(--headings);
+    border-top: 1pt solid var(--accent);
+  }
+
+  .data-table .subtotal-row td { border-top: 0.5pt solid var(--tableline); }
+
+  .table-note {
+    font-size: 7.5pt;
+    color: var(--body);
+    margin-top: 6px;
+  }
+
+  /* Quote table */
+  .quote-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0;
+    page-break-inside: avoid;
+  }
+
+  .quote-table th {
+    font-size: 6.5pt;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--body);
+    font-weight: 700;
+    text-align: left;
+    padding: 5px 8px;
+    border-bottom: 1pt solid var(--tableline);
+  }
+
+  .quote-table th.num { text-align: right; }
+
+  .quote-table td {
+    font-size: 9pt;
+    color: var(--body);
+    padding: 5px 8px;
+    border-bottom: 0.5pt solid var(--tableline);
+    vertical-align: top;
+    border-right: none;
+    border-left: none;
+    border-top: none;
+  }
+
+  .quote-table td.num { text-align: right; }
+
+  .quote-table .total-row td {
+    font-weight: 700;
+    color: var(--headings);
+    border-top: 1pt solid var(--accent);
+  }
+
+  .quote-line {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10.5pt;
+    color: var(--headings);
+    font-weight: 400;
+    margin: 0 0 6px;
+  }
+
+  .quote-line strong {
+    font-weight: 700;
+  }
+
+  /* Signature — no bordered box */
+  .signature-block {
+    margin: 16px 0;
+    page-break-inside: avoid;
+  }
+
+  .signature-img {
+    max-width: 162px;
+    height: auto;
+    display: block;
+    margin-bottom: 6px;
+    border: none;
+  }
+
+  .signature-name {
+    font-size: 10pt;
+    color: var(--headings);
+    font-weight: 700;
+    margin: 0 0 3px;
+  }
+
+  .signature-role {
+    font-size: 9pt;
+    color: var(--body);
+    margin: 0;
+  }
+
+  /* Offices two-column */
+  .offices-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-top: 10px;
+    page-break-inside: avoid;
+  }
+
+  .office-col {
+    page-break-inside: avoid;
+  }
+
+  .office-col h3 {
+    font-size: 8pt;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--headings);
+    font-weight: 700;
+    margin: 0 0 5px;
+    display: block;
+  }
+
+  .office-col p {
+    font-size: 8.5pt;
+    color: var(--body);
+    line-height: 1.4;
+    margin: 0 0 4px;
+  }
+
+  .contact-line {
+    font-size: 8.5pt;
+    color: var(--body);
+    line-height: 1.4;
+    margin: 0 0 4px;
+  }
+
+  .contact-line strong { color: var(--headings); font-weight: 700; }
+
+  /* ---------- Page footer (pinned to bottom) ---------- */
+  .page-footer {
+    position: absolute;
+    bottom: 18mm;
+    left: 16mm;
+    right: 16mm;
+    border-top: 1pt solid var(--accent);
+    padding-top: 4px;
+    font-size: 7.6pt;
+    color: var(--captions);
+    text-align: left;
+    line-height: 1.4;
+  }
+
+  /* ---------- Print overrides ---------- */
+  @media print {
+    body { background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+    .site-header, .site-footer, .mobile-actions, .profile-toolbar,
+    .profile-form, .no-print, nav, header.site-header, footer.site-footer {
+      display: none !important;
+    }
+
+    .profile-pages { max-width: 100%; margin: 0; padding: 0; }
+
+    .page {
+      width: 210mm !important;
+      height: 297mm !important;
+      padding: 15mm 16mm 18mm 16mm !important;
+      box-shadow: none !important;
+      border: none !important;
+      page-break-after: always !important;
+      break-after: page !important;
+      overflow: hidden !important;
+    }
+
+    .page:last-child { page-break-after: auto !important; }
+
+    .page-content { height: 100% !important; }
+
+    .cover-image, .img-wrap img, .signature-img {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    .card, .value-card, .objective-card, .service-card, .foundation-panel,
+    .dept-card, .step-card {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    a { color: #000 !important; text-decoration: none !important; }
+
+    @page { size: A4; margin: 0 !important; }
+  }
+</style>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -32,110 +901,669 @@
   </div>
 </header>
 
-<main id="main" class="profile-page">
-  <div class="container profile-toolbar no-print">
-    <a class="link-arrow" href="index.html">Back to the website</a>
-    <button class="btn btn--navy" type="button" data-print>Print / save as PDF</button>
+<main id="main" class="profile-pages">
+  <div class="profile-toolbar">
+    <a href="2026_Updated_Current_Security_Group_Ltd_Profile.pdf" class="btn btn--outline" download>Download PDF</a>
+    <button class="btn" type="button" data-print>Print / save as PDF</button>
+    <button class="btn btn--outline" type="button" data-profile-form-toggle>Customise profile</button>
   </div>
 
-  <article class="profile-sheet">
-    <header class="profile__top">
-      <img src="assets/img/logo-navy.png" alt="Current Security Group Ltd" width="360" height="260">
-      <p>Company profile<br>2026</p>
-    </header>
+  <!-- Customisation form (screen only) -->
+  <div class="container profile-form" id="profile-form">
+    <h2>Prepare your profile</h2>
+    <p class="intro">Fill in your details below. They will appear on the Quotation page so the PDF is addressed to you.</p>
+    <form id="profile-customise-form" novalidate>
+      <div class="field-row">
+        <div class="field">
+          <label for="pf-name">Full name <span style="color:#a3251c">*</span></label>
+          <input type="text" id="pf-name" name="name" required placeholder="e.g. Bethuel Kones" maxlength="100">
+        </div>
+        <div class="field">
+          <label for="pf-email">Email address <span style="color:#a3251c">*</span></label>
+          <input type="email" id="pf-email" name="email" required placeholder="e.g. bethuel@example.com" maxlength="150">
+        </div>
+      </div>
+      <div class="field">
+        <label for="pf-address">Address <span style="color:#a3251c">*</span></label>
+        <input type="text" id="pf-address" name="address" required placeholder="e.g. Nairobi Kenya or Sirisia, Bungoma Kenya" maxlength="200">
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label for="pf-company">Company / organisation</label>
+          <input type="text" id="pf-company" name="company" placeholder="e.g. Acme Ltd" maxlength="150">
+        </div>
+        <div class="field">
+          <label for="pf-phone">Phone</label>
+          <input type="tel" id="pf-phone" name="phone" placeholder="e.g. 0722 000 000" maxlength="50">
+        </div>
+      </div>
+      <input type="hidden" id="pf-date" name="date">
+      <div class="actions">
+        <button type="button" class="btn-sm" id="pf-apply">Apply to profile</button>
+        <button type="button" class="btn-sm btn-sm--outline" id="pf-clear">Clear</button>
+      </div>
+      <p class="form-hint">Name, address and email are required. Company and phone are optional. The date is filled in automatically. No information is stored or sent anywhere — it only appears on your screen and in your printed PDF.</p>
+    </form>
+  </div>
 
-    <h1 class="profile__title">Security services in Kenya.</h1>
-    <p class="profile__subtitle">Guarding, K9, CCTV, alarms, access control, investigations, consultancy and training. Offices in Nairobi and Sirisia, Bungoma.</p>
+  <!-- ============ PAGE 1: COVER (left-aligned, NO Prepared for block) ============ -->
+  <div class="page" id="page-1">
+    <div class="page-content">
+      <div class="cover">
+        <img src="images/profile/logo.png" alt="Current Security Group Ltd" class="logo" width="360" height="260">
+        <p class="cover-eyebrow">COMPANY PROFILE
+2026</p>
+        <hr class="cover-line">
+        <h1 class="cover-headline">Security services in Kenya.</h1>
+        <p class="cover-subtitle">Guarding, K9, CCTV, alarms, access control, investigations, consultancy and training. Offices in Nairobi and Sirisia, Bungoma.</p>
 
-    <div class="profile__meta">
-      <div><b>Established</b><span>2004</span></div>
-      <div><b>Coverage</b><span>Nairobi and Bungoma offices · nationwide deployment</span></div>
-      <div><b>Control room</b><span>24/7 radio and monitoring</span></div>
-      <div><b>Membership</b><span>Protective Security Association of Kenya (PROSAK)</span></div>
+        <div class="fact-group">
+          <span class="fact-label">ESTABLISHED</span>
+          <p class="fact-value">2004, incorporated 2013</p>
+        </div>
+        <div class="fact-group">
+          <span class="fact-label">OFFICES</span>
+          <p class="fact-value">Nairobi and Sirisia, Bungoma</p>
+        </div>
+        <div class="fact-group">
+          <span class="fact-label">REGISTRATION</span>
+          <p class="fact-value">Private Security Regulatory Authority (PSRA)</p>
+        </div>
+        <div class="fact-group">
+          <span class="fact-label">MEMBERSHIP</span>
+          <p class="fact-value">Protective Security Association of Kenya (PROSAK)</p>
+        </div>
+
+        <img src="images/profile/office-front.jpg" alt="Current Security Group Ltd office" class="cover-image" width="1240" height="576">
+        <p class="cover-caption">Current Security Group Ltd office</p>
+
+        <div class="page-footer">Current Security Group Ltd · Your Desired Security Partner · Profile updated October 2026. This document is a summary; the signed contract and written assignment instructions govern the service.</div>
+      </div>
     </div>
+  </div>
 
-    <section class="profile-section">
-      <h2>About the company</h2>
-      <p>Current Security Group Ltd provides professional security services to homes, businesses and institutions across Kenya. The company has operated since 2004 and runs a 24/7 control room with a radio network linking guards, supervisors and duty managers.</p>
-      <p>Our approach is operational: every site is surveyed, the post instructions are written down and agreed, and supervisors check each guard three times per shift. A resident contract manager oversees the transition from your previous provider and remains the point of contact for the account.</p>
-    </section>
+  <!-- ============ PAGE 2: ABOUT ============ -->
+  <div class="page" id="page-2">
+    <div class="page-content">
+      <h2 class="section-heading">About the company</h2>
+      <p>Current Security (CS) was established in 2004 as a business entity under the name Wakobe Security Company, incorporated in 2013 as Wakobe Security Company Ltd, and in 2021 changed its name to Current Security Group Ltd, with a view to providing quality, professional security services to the public and private sectors. We are a Kenyan-based security provider with a niche in skills training and capacity building around security solutions.</p>
+      <p>We have a recognised track record of delivering specialised security solutions such as anti-terror training, close protection, risk and disaster management, investigations and related training and education, for the corporate sector, government agencies, foundations and related organisations, high net worth individuals and private individuals. With offices in Nairobi and Bungoma and an extensive network of associates, we bring our clients proven security solutions.</p>
+      <p>Our driving force is people with the dedication, dynamism and determination to be the best. Our motto, providing security services with diversity, has been our strength for growth, and it has helped us secure and maintain security contracts with reputable establishments. Whether your business is large or small, we provide a full range of security services built to meet your expectations.</p>
 
-    <section class="profile-section">
-      <h2>Services</h2>
-      <h3>Security guarding</h3>
-      <p>Trained, vetted officers on 12-hour shifts for surveillance, deterrence and protection of property. Guards are vetted to Private Security Regulatory Authority criteria, complete one month of training and are inducted beside experienced officers before taking a post alone.</p>
-      <h3>K9 dog service</h3>
-      <p>Trained dogs and handlers for an added layer of deterrence, day and night, deployed alongside static guards where the site layout and risk profile require a mobile presence.</p>
-      <h3>CCTV and alarms</h3>
-      <p>Camera installation and staff training, with monitors manned around the clock. Automatic intrusion alarms and remote or push-button panic systems are installed and serviced.</p>
-      <h3>Access control and investigations</h3>
-      <p>Keyless entry, fingerprint readers, airlock doors and remote door locks for single doors or multi-site operations. Investigators handle robbery, forgery, infiltration and mismanagement, with written reports and exhibits.</p>
-      <h3>Consultancy and crowd control</h3>
-      <p>Site surveys, vulnerability assessments and custom security programmes, plus recruitment and training of guards. Crowd control is provided for seminars, public gatherings, workshops and functions.</p>
-    </section>
-
-    <section class="profile-section">
-      <h2>How we work</h2>
-      <ul>
-        <li><strong>Vetting:</strong> PSRA criteria, literacy, and a physical and medical examination.</li>
-        <li><strong>Training:</strong> one month covering access control, firefighting drills, first aid, crime detection and prevention, and customer care.</li>
-        <li><strong>Supervision:</strong> three checks per guard per shift, plus unannounced duty-manager spot checks.</li>
-        <li><strong>Transition:</strong> site survey, written recommendations, assignment instructions, property inventory and guard introductions.</li>
-        <li><strong>Cover:</strong> fire, theft, burglary, WIBA and contractual insurance.</li>
-      </ul>
-    </section>
-
-    <section class="profile-section">
-      <h2>Service standards</h2>
-      <div class="table-scroll" tabindex="0">
-        <table class="standards">
-          <caption class="visually-hidden">Current Security service standards</caption>
-          <thead>
-            <tr><th scope="col">Commitment</th><th scope="col">Standard</th></tr>
-          </thead>
-          <tbody>
-            <tr><th scope="row">Takeover</th><td>Smooth transition within 12 hours of the contract starting.</td></tr>
-            <tr><th scope="row">Supervision</th><td>Three supervisor checks per guard per shift, day and night.</td></tr>
-            <tr><th scope="row">Spot checks</th><td>Unannounced duty-manager checks by company vehicle.</td></tr>
-            <tr><th scope="row">Communication</th><td>Radios or mobile phones with supervisors and site in-charges.</td></tr>
-            <tr><th scope="row">Insurance</th><td>Fire, theft, burglary, WIBA and contractual cover.</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <section class="profile-section">
-      <h2>Compliance</h2>
-      <ul>
-        <li>PSRA licensed — licence number PSRA/CSL/19/90.</li>
-        <li>Member of the Protective Security Association of Kenya (PROSAK).</li>
-        <li>Insurance certificates and guard vetting records available on request during procurement.</li>
-      </ul>
-    </section>
-
-    <section class="profile-section">
-      <h2>Offices and contact</h2>
-      <div class="profile__meta">
-        <div>
-          <b>Nairobi head office</b>
-          <span>P.O. Box 249 (00511), Nairobi, Kenya<br>
-         0106&nbsp;732&nbsp;300 ·&nbsp;0733&nbsp;732&nbsp;300 ·&nbsp;0777&nbsp;732&nbsp;300<br>
-          Street address: [TO CONFIRM]</span>
+      <div class="timeline-grid">
+        <div class="timeline-col">
+          <span class="timeline-year">2004</span>
+          <p class="timeline-text">Begins trading as Wakobe Security Company</p>
         </div>
-        <div>
-          <b>Bungoma office</b>
-          <span>P.O. Box 63 (50201), Sirisia, Bungoma<br>
-         0799&nbsp;334&nbsp;449 ·&nbsp;0734&nbsp;334&nbsp;449 ·&nbsp;0737&nbsp;334&nbsp;441<br>
-          Street address: [TO CONFIRM]</span>
+        <div class="timeline-col">
+          <span class="timeline-year">2013</span>
+          <p class="timeline-text">Incorporated as Wakobe Security Company Ltd</p>
+        </div>
+        <div class="timeline-col">
+          <span class="timeline-year">2021</span>
+          <p class="timeline-text">Renamed Current Security Group Ltd</p>
+        </div>
+        <div class="timeline-col">
+          <span class="timeline-year">2026</span>
+          <p class="timeline-text">Offices in Nairobi and Sirisia, Bungoma</p>
         </div>
       </div>
-      <p><strong>24/7 control room:</strong> <a href="tel:+254737334449">0737&nbsp;334&nbsp;449</a><br>
-      <strong>Sales:</strong> <a href="tel:+254722732300">0722&nbsp;732&nbsp;300</a><br>
-      <strong>Email:</strong> <a href="mailto:csgroup79@gmail.com">csgroup79@gmail.com</a> · <a href="mailto:2014current@gmail.com">2014current@gmail.com</a></p>
-    </section>
 
-    <p class="profile__foot">Current Security Group Ltd · Your Desired Security Partner · Profile updated 19 October 2026. This document is a summary; the contract and written assignment instructions govern the service.</p>
-  </article>
+      <div class="img-pair">
+        <div class="img-wrap">
+          <img src="images/profile/office-and-vehicle.jpg" alt="Our office and company vehicle" width="1000" height="562">
+          <p class="img-caption">Our office and company vehicle</p>
+        </div>
+        <div class="img-wrap">
+          <img src="images/profile/operations-desk.jpg" alt="Operations desk" width="1000" height="562">
+          <p class="img-caption">Operations desk</p>
+        </div>
+      </div>
+
+      <h3 class="section-heading">Our commitment</h3>
+      <p>We are committed to offering quality security services to our clients at affordable and competitive rates. We do this by:</p>
+      <ul>
+        <li>carrying out regular supervision of every sentry guard posted at our clients&rsquo; sites, to make sure all security measures are carried out effectively; and</li>
+        <li>running cost-effective, performance-oriented training programmes, seminars and workshops that enhance our personnel&rsquo;s skills.</li>
+      </ul>
+
+      <div class="page-footer">Current Security Group Ltd · Your Desired Security Partner · Profile updated October 2026. This document is a summary; the signed contract and written assignment instructions govern the service.</div>
+    </div>
+  </div>
+
+  <!-- ============ PAGE 3: VISION, MISSION, VALUES, OBJECTIVES, CODE ============ -->
+  <div class="page" id="page-3">
+    <div class="page-content">
+      <h2 class="section-heading">Vision and mission</h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:12px;">
+        <div class="card">
+          <span class="card-title">Our vision</span>
+          <p class="card-text">To be the widely preferred strategic security provider of choice, offering the highest level of service and an unsurpassed response to the needs of our clientele.</p>
+        </div>
+        <div class="card">
+          <span class="card-title">Our mission</span>
+          <p class="card-text">To establish critical and sustainable business partnerships with clients, while promoting a safer, more secure environment that contributes to our client&rsquo;s profitability as a value-added security service.</p>
+        </div>
+      </div>
+      <p style="text-align:center;font-style:italic;color:var(--headings);font-weight:700;margin:6px 0 14px;">&ldquo;Providing security services with diversity.&rdquo;</p>
+      <p>We achieve our vision and mission through an uncompromising commitment to professionalism and the constant development of business and personnel performance, to the benefit of our clients, our personnel and the general public. We provide a wide spectrum of security services to the satisfaction of our clients, and we deal with them in the spirit of service with courtesy.</p>
+
+      <h3 class="section-heading">Core values</h3>
+      <div class="values-row">
+        <div class="value-card">
+          <span class="value-num">01</span>
+          <span class="value-name">Respect</span>
+          <span class="value-desc">We affirm respect for the relevant accreditation, regulatory and statutory bodies.</span>
+        </div>
+        <div class="value-card">
+          <span class="value-num">02</span>
+          <span class="value-name">Practical skills</span>
+          <span class="value-desc">Dedicated to the most up-to-date, practical training and services possible.</span>
+        </div>
+        <div class="value-card">
+          <span class="value-num">03</span>
+          <span class="value-name">Integrity</span>
+          <span class="value-desc">We act consistently with our mission, honestly and transparently.</span>
+        </div>
+        <div class="value-card">
+          <span class="value-num">04</span>
+          <span class="value-name">Commitment</span>
+          <span class="value-desc">We work together effectively to impart skills around security issues.</span>
+        </div>
+        <div class="value-card">
+          <span class="value-num">05</span>
+          <span class="value-name">Excellence</span>
+          <span class="value-desc">We challenge ourselves to the highest levels of learning and performance, for greater impact.</span>
+        </div>
+      </div>
+
+      <h3 class="section-heading">Business objectives</h3>
+      <div class="objectives-grid">
+        <div class="objective-card">
+          <span class="objective-title">Protecting the public</span>
+          <p class="objective-text">Ensuring we deliver regulated private security services.</p>
+        </div>
+        <div class="objective-card">
+          <span class="objective-title">Customer service</span>
+          <p class="objective-text">Delivering services which meet the needs of our customers.</p>
+        </div>
+        <div class="objective-card">
+          <span class="objective-title">Delivering value</span>
+          <p class="objective-text">Operating within our means and delivering value for money.</p>
+        </div>
+        <div class="objective-card">
+          <span class="objective-title">Developing our people</span>
+          <p class="objective-text">Making sure staff and clients have the competencies and skills to perform effectively and reach their potential.</p>
+        </div>
+      </div>
+
+      <h3 class="section-heading">Code of conduct</h3>
+      <p>This is the code of conduct we expect from every member of our staff:</p>
+      <ul>
+        <li>We maintain high ethical standards and uphold our quality management philosophies.</li>
+        <li>We maintain integrity and confidentiality with both partners and clients, and keep an open and honest channel of communication.</li>
+        <li>We provide a healthy and safe work environment.</li>
+        <li>We do not unfairly damage the reputation of competitors, either directly or by implication.</li>
+        <li>We adhere to all industry compliance and verification requirements.</li>
+      </ul>
+
+      <div class="page-footer">Current Security Group Ltd · Your Desired Security Partner · Profile updated October 2026. This document is a summary; the signed contract and written assignment instructions govern the service.</div>
+    </div>
+  </div>
+
+  <!-- ============ PAGE 4: SECURITY GUARDING + K9 ============ -->
+  <div class="page" id="page-4">
+    <div class="page-content">
+      <h2 class="section-heading">Security guarding</h2>
+      <div style="display:flex;gap:14px;align-items:flex-start;">
+        <div style="flex:1;">
+          <p>We provide security guards on 12-hour shifts across a wide range of assignments. The main objective is surveillance, deterrence and the general protection and care of our customers&rsquo; property.</p>
+          <p>Every guard is selected and vetted to Private Security Regulatory Authority criteria, completes one month of training and works alongside experienced guards for practical induction before taking a post alone.</p>
+          <p>Supervisors visit each post three times per shift, and duty managers make unannounced spot checks, so replacements and emergency postings leave no gaps.</p>
+        </div>
+        <div style="flex:0 0 48%;">
+          <div class="img-wrap">
+            <img src="images/profile/guards-at-office-group.jpg" alt="Our guards at the company office" width="1000" height="667">
+            <p class="img-caption">Our guards at the company office</p>
+          </div>
+        </div>
+      </div>
+
+      <hr style="border:none;border-top:0.5pt solid var(--divider);margin:16px 0;">
+
+      <h2 class="section-heading">K9 dog service</h2>
+      <div style="display:flex;gap:14px;align-items:flex-start;">
+        <div style="flex:1;">
+          <p>German Shepherd and Boerboel dogs with trained handlers, deployed alongside static guards for added deterrence.</p>
+          <p>Our dogs are trained in obedience, guarding, patrol, apprehension and live tracking. Handlers are trained in dog patrol, dog health care, kennel management, dog first aid and customer care.</p>
+          <p>Vaccination records and training certificates for our dogs are in the annex.</p>
+        </div>
+        <div style="flex:0 0 48%;">
+          <div class="img-wrap">
+            <img src="images/profile/k9-handler-and-dog.jpg" alt="K9 handler and dog with the company vehicle" width="1000" height="667">
+            <p class="img-caption">K9 handler and dog with the company vehicle</p>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px;">
+        <div class="img-wrap">
+          <img src="images/profile/german-shepherd.jpg" alt="German Shepherd" width="1000" height="667">
+          <p class="img-caption">German Shepherd</p>
+        </div>
+        <div class="img-wrap">
+          <img src="images/profile/guards-with-vehicle.jpg" alt="Guards with the company vehicle" width="1000" height="667">
+          <p class="img-caption">Guards with the company vehicle</p>
+        </div>
+        <div class="img-wrap">
+          <img src="images/profile/guards-at-office.jpg" alt="Guards at the office" width="1000" height="667">
+          <p class="img-caption">Guards at the office</p>
+        </div>
+      </div>
+
+      <div class="page-footer">Current Security Group Ltd · Your Desired Security Partner · Profile updated October 2026. This document is a summary; the signed contract and written assignment instructions govern the service.</div>
+    </div>
+  </div>
+
+  <!-- ============ PAGE 5: TECHNOLOGY, INVESTIGATION, ADVISORY ============ -->
+  <div class="page" id="page-5">
+    <div class="page-content">
+      <h2 class="section-heading">Technology, investigation and advisory services</h2>
+      <div class="services-grid">
+        <div class="service-card">
+          <span class="service-num">01</span>
+          <span class="service-title">CCTV monitoring</span>
+          <p class="service-text">We install CCTV cameras and train staff at strategic points in assignments such as banks, industries, stores and residential houses. The monitor is positioned strategically and manned 24 hours a day while recording all activity.</p>
+        </div>
+        <div class="service-card">
+          <span class="service-num">02</span>
+          <span class="service-title">Alarm systems</span>
+          <p class="service-text">Automatic alarms activate as soon as they detect intrusion or interference. Remote-controlled and push-button alarms are activated manually by clients&rsquo; guards to call for help when under attack or sensing danger.</p>
+        </div>
+        <div class="service-card">
+          <span class="service-num">03</span>
+          <span class="service-title">Access control</span>
+          <p class="service-text">Multiple product lines of full access control systems, from keyless entry for a single door to a multi-site operation, including fingerprint detectors, airlock doors and remote-controlled door locks.</p>
+        </div>
+        <div class="service-card">
+          <span class="service-num">04</span>
+          <span class="service-title">Private investigations</span>
+          <p class="service-text">Highly trained investigators for robberies, forgeries, infiltration and any kind of mismanagement or crime-related issue. Clients are furnished with concrete reports and exhibits for ease of prosecution.</p>
+        </div>
+        <div class="service-card">
+          <span class="service-num">05</span>
+          <span class="service-title">Security consultancy</span>
+          <p class="service-text">Security advice, site surveys, and recruitment and training of guards and officers for companies and individuals. Our experts evaluate your programme using surveys, vulnerability assessments, crime statistics and accepted standards to design a customised one.</p>
+        </div>
+        <div class="service-card">
+          <span class="service-num">06</span>
+          <span class="service-title">Crowd control</span>
+          <p class="service-text">Non-violent and violent crowd control at seminars, public gatherings, workshops, functions and buildings.</p>
+        </div>
+      </div>
+
+      <div class="approach-panel">
+        <span class="approach-title">How we think</span>
+        <p>We constantly monitor criminal modus operandi and current situational information, so we can tailor a solution to any security requirement. We believe it is far better to be pro-active than simply reactive, and we have developed security solutions and training that cater for all budgets and environments.</p>
+      </div>
+
+      <div class="approach-panel">
+        <span class="approach-title">Survey and quotation</span>
+        <p>Our management carries out a survey of your premises or institution and submits security recommendations from time to time, because security challenges are dynamic.</p>
+      </div>
+
+      <div class="approach-panel">
+        <span class="approach-title">Who we serve</span>
+        <p>Our services are geared to meet all your security needs at home, in the office, at the factory, for cash escort and for private investigation. We tailor each service to your operation and your individual needs. Your safety and security is our concern.</p>
+      </div>
+
+      <div class="page-footer">Current Security Group Ltd · Your Desired Security Partner · Profile updated October 2026. This document is a summary; the signed contract and written assignment instructions govern the service.</div>
+    </div>
+  </div>
+
+  <!-- ============ PAGE 6: TRAINING ============ -->
+  <div class="page" id="page-6">
+    <div class="page-content">
+      <h2 class="section-heading">Corporate wellbeing and safety training</h2>
+      <p>Current Security provides capacity-building skills that strengthen security in the public and private sectors. The aim of corporate security training is to introduce participants to the realities of violence and crime. We give them the mental tools and understanding to proactively identify, avoid and manage these situations should they occur.</p>
+      <p>After completing a course, participants have a heightened awareness of personal security, which reduces their exposure to violent encounters and crime in every part of their lives. The knowledge and skills they learn help them lead healthier, safer lives, which means higher productivity in the workplace. We have wide experience in the design, development and implementation of successful training programmes in the public and private sectors.</p>
+
+      <div class="foundation-panel">
+        <span class="foundation-title">The foundation</span>
+        <p class="foundation-text">Everything starts with the Security Awareness session. It is the best place to begin, because it creates the foundation for all further training.</p>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px;">
+        <div class="card">
+          <span class="card-title">Personal security</span>
+          <p class="card-text">Courses that build personal safety awareness and self-protection.</p>
+        </div>
+        <div class="card">
+          <span class="card-title">Public security</span>
+          <p class="card-text">Courses on safety in public places, travel and events.</p>
+        </div>
+        <div class="card">
+          <span class="card-title">Vehicle security</span>
+          <p class="card-text">Courses on driving safely and avoiding vehicle-related crime.</p>
+        </div>
+      </div>
+      <p>Attending as many of the courses as possible helps each person predict, avoid or react appropriately in as many situations as possible.</p>
+
+      <h3 class="section-heading">Courses available</h3>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+        <ul style="margin:0;">
+          <li>Security awareness and crime avoidance</li>
+          <li>Self-defence</li>
+          <li>Rape prevention and women&rsquo;s self-defence</li>
+          <li>Travel security</li>
+          <li>Armed robbery management</li>
+        </ul>
+        <ul style="margin:0;">
+          <li>Hostage and kidnap survival</li>
+          <li>ATM crime avoidance</li>
+          <li>Bomb and IED (improvised explosive devices) awareness</li>
+          <li>Defensive and skidpan driving</li>
+        </ul>
+      </div>
+
+      <div class="img-pair" style="margin-top:14px;">
+        <div class="img-wrap">
+          <img src="images/profile/prosak-event.jpg" alt="At a PROSAK event" width="1000" height="562">
+          <p class="img-caption">At a PROSAK event</p>
+        </div>
+        <div class="img-wrap">
+          <img src="images/profile/prosak-conference.jpg" alt="PROSAK Security Conference" width="1000" height="562">
+          <p class="img-caption">PROSAK Security Conference</p>
+        </div>
+      </div>
+
+      <div class="page-footer">Current Security Group Ltd · Your Desired Security Partner · Profile updated October 2026. This document is a summary; the signed contract and written assignment instructions govern the service.</div>
+    </div>
+  </div>
+
+  <!-- ============ PAGE 7: OUR PEOPLE ============ -->
+  <div class="page" id="page-7">
+    <div class="page-content">
+      <h2 class="section-heading">Our people</h2>
+      <p>Current Security was formed by accomplished, experienced professional investigators, security and intelligence operatives, healthcare professionals and business executives who have worked in the public and private sectors, with wide experience of national and international business, law, finance and government operations.</p>
+      <p>Our executive and senior staff include Kenyan-based investigators and security professionals with a network of local contacts and long-term local relationships. That lets us understand the environment and context of each case, protect the people involved and resolve the situation. Our principals have lived and worked in a variety of locations, so we are a multi-disciplined, multi-cultural group able to respond effectively and efficiently to even the most unusual situations.</p>
+      <p>Our reputation is built on unconventional solutions to complex cases, using confidential sources and key contacts, domestic and international resources, electronic databases and the expertise of seasoned professionals.</p>
+
+      <h3 class="section-heading">How we recruit and train guards</h3>
+      <p>In line with our motto of service with courtesy, we select and vet guards carefully, according to the Private Security Regulatory Authority criteria.</p>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:12px;align-items:stretch;">
+        <div class="card">
+          <span class="card-title">Training experience</span>
+          <p class="card-text">One month of training in assignment instructions, access control, industrial accidents, firefighting drills, self-defence, safety and hygiene, first aid, crime detection and prevention, casualty evacuation and customer care, then posting beside experienced guards for practical induction.</p>
+        </div>
+        <div class="card">
+          <span class="card-title">Education</span>
+          <p class="card-text">Every guard must be literate and able to interpret written instructions at any assignment.</p>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;align-items:stretch;">
+        <div class="card">
+          <span class="card-title">Health</span>
+          <p class="card-text">Guards undergo a physical and medical examination to confirm they are fit for the duties assigned to them.</p>
+        </div>
+        <div class="card">
+          <span class="card-title">Standards of conduct</span>
+          <p class="card-text">Regular refresher courses and seminars keep discipline high, in line with company standing orders.</p>
+        </div>
+      </div>
+
+      <h3 class="section-heading">Our team</h3>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
+        <div class="img-wrap">
+          <img src="images/profile/guards-at-office.jpg" alt="Guards at the office" width="1000" height="667">
+          <p class="img-caption">Guards at the office</p>
+        </div>
+        <div class="img-wrap">
+          <img src="images/profile/guard-on-duty.jpg" alt="On duty" width="1000" height="667">
+          <p class="img-caption">On duty</p>
+        </div>
+        <div class="img-wrap">
+          <img src="images/profile/supervisor.jpg" alt="Supervisor" width="1000" height="667">
+          <p class="img-caption">Supervisor</p>
+        </div>
+      </div>
+
+      <div class="page-footer">Current Security Group Ltd · Your Desired Security Partner · Profile updated October 2026. This document is a summary; the signed contract and written assignment instructions govern the service.</div>
+    </div>
+  </div>
+
+  <!-- ============ PAGE 8: TAKEOVER, STANDARDS ============ -->
+  <div class="page" id="page-8">
+    <div class="page-content">
+      <h2 class="section-heading">How we take over a site</h2>
+      <p>We can ensure a smooth transition from the incumbent service provider within 12 hours of the contract starting. At installation we make sure of the following.</p>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <span class="step-num">1</span>
+          <span class="step-title">Site survey</span>
+          <span class="step-desc">Carried out at the earliest time possible, with advice given to you.</span>
+        </div>
+        <div class="step-card">
+          <span class="step-num">2</span>
+          <span class="step-title">Instructions</span>
+          <span class="step-desc">Concise, clear assignment instructions agreed with you.</span>
+        </div>
+        <div class="step-card">
+          <span class="step-num">3</span>
+          <span class="step-title">Guards introduced</span>
+          <span class="step-desc">Personnel introduced before posting, and you receive the details of every guard on your property.</span>
+        </div>
+        <div class="step-card">
+          <span class="step-num">4</span>
+          <span class="step-title">Inventory</span>
+          <span class="step-desc">All property in the area of assignment is taken stock of.</span>
+        </div>
+        <div class="step-card">
+          <span class="step-num">5</span>
+          <span class="step-title">Oversight</span>
+          <span class="step-desc">A resident contract manager oversees the transition.</span>
+        </div>
+      </div>
+      <p style="font-weight:700;color:var(--headings);margin-top:8px;">Smooth takeover within 12 hours of the contract starting.</p>
+
+      <h3 class="section-heading">Communication network</h3>
+      <p>We keep a constant and open network on radio and mobile phones, supplementing landline links with our control room and managers. All of our services have a radio call communication network so operations stay efficient and effective.</p>
+
+      <h3 class="section-heading">Supervision</h3>
+      <p>Guards are supervised on their shifts, day and night, at their respective assignments, three times by supervisors. Assignment in-charges and supervisors carry either radios (walkie-talkies) or mobile phones for easy communication.</p>
+      <p>Duty managers also make impromptu spot checks to make sure the quality of service is never compromised, posting guards in emergencies and replacements. They travel by company vehicle, so there are no gaps and customers&rsquo; welfare and property are secured at all times.</p>
+
+      <h3 class="section-heading">Service standards</h3>
+      <table class="data-table">
+        <thead>
+          <tr><th>Commitment</th><th>Standard</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Takeover</td><td>Smooth transition from your current provider within 12 hours of the contract starting.</td></tr>
+          <tr><td>Supervision</td><td>Three supervisor checks per guard per shift, day and night.</td></tr>
+          <tr><td>Spot checks</td><td>Unannounced duty-manager checks by company vehicle, so posts are never left uncovered.</td></tr>
+          <tr><td>Communication</td><td>Radios or mobile phones with supervisors and site in-charges.</td></tr>
+          <tr><td>Client updates</td><td>Frequent updates on security status and threat levels, and free security advice for existing clients.</td></tr>
+        </tbody>
+      </table>
+
+      <div class="page-footer">Current Security Group Ltd · Your Desired Security Partner · Profile updated October 2026. This document is a summary; the signed contract and written assignment instructions govern the service.</div>
+    </div>
+  </div>
+
+  <!-- ============ PAGE 9: ORGANISATION, MEMBERSHIP ============ -->
+  <div class="page" id="page-9">
+    <div class="page-content">
+      <h2 class="section-heading">How we are organised</h2>
+      <p>The firm is managed by an executive board of directors made up of competent professionals in investigation, security surveillance, marketing, finance and administration. It is organised into three departments.</p>
+
+      <div class="depts-grid">
+        <div class="dept-card">
+          <span class="dept-title">Operations</span>
+          <p class="dept-text">Effective implementation and enforcement of all contractual security obligations of the company&rsquo;s guard section, dog section, private investigation section, alarm systems control section and others.</p>
+        </div>
+        <div class="dept-card">
+          <span class="dept-title">Marketing</span>
+          <p class="dept-text">Advertising and marketing of our services through prospecting new customers, customer care and public relations, keeping constant liaison with clients to improve service and offer fair terms and conditions.</p>
+        </div>
+        <div class="dept-card">
+          <span class="dept-title">Finance and Administration</span>
+          <p class="dept-text">All matters of finance, accounts, human resources and supplies. It handles recruitment of personnel and sets the terms and conditions of service for all employees.</p>
+        </div>
+      </div>
+
+      <h3 class="section-heading">Relationships and membership</h3>
+      <p>Current Security Group Ltd is a member of the Protective Security Association of Kenya (PROSAK). We have built close working relationships with the police, local administration, local enforcement officers and other private security providers.</p>
+      <p>Because we support the basic security needs of the community, we have always kept good relations with the communities in our areas of operation.</p>
+
+      <div class="img-pair" style="margin-top:14px;">
+        <div class="img-wrap">
+          <img src="images/profile/prosak-event.jpg" alt="At a PROSAK event" width="1000" height="562">
+          <p class="img-caption">At a PROSAK event</p>
+        </div>
+        <div class="img-wrap">
+          <img src="images/profile/prosak-conference.jpg" alt="PROSAK Security Conference" width="1000" height="562">
+          <p class="img-caption">PROSAK Security Conference</p>
+        </div>
+      </div>
+
+      <div class="img-wrap" style="margin-top:14px;text-align:center;">
+        <img src="images/profile/org-chart.jpg" alt="Organisation chart" width="1000" height="707">
+        <p class="img-caption">Organisation chart</p>
+      </div>
+
+      <div class="page-footer">Current Security Group Ltd · Your Desired Security Partner · Profile updated October 2026. This document is a summary; the signed contract and written assignment instructions govern the service.</div>
+    </div>
+  </div>
+
+  <!-- ============ PAGE 10: REGISTRATION, COMPLIANCE, INSURANCE, WHY ============ -->
+  <div class="page" id="page-10">
+    <div class="page-content">
+      <h2 class="section-heading">Registration and compliance</h2>
+      <table class="data-table">
+        <thead>
+          <tr><th>Registration</th><th>Issued by</th><th>Reference</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Company registration</td><td>Registrar of Companies</td><td>CPR/2013/101673</td></tr>
+          <tr><td>Private security service provider</td><td>Private Security Regulatory Authority</td><td>PSRA/CSL/19/90</td></tr>
+          <tr><td>Association membership</td><td>Protective Security Association of Kenya (PROSAK)</td><td>Corporate member PCM/112/21</td></tr>
+          <tr><td>Tax compliance</td><td>Kenya Revenue Authority</td><td>PIN P051419926M</td></tr>
+          <tr><td>Health insurance compliance</td><td>Social Health Authority</td><td>Compliance certificate</td></tr>
+          <tr><td>Social security compliance</td><td>National Social Security Fund</td><td>Compliance certificate</td></tr>
+          <tr><td>Business permits</td><td>Bungoma and Kajiado counties</td><td>Single business permits, 2026</td></tr>
+        </tbody>
+      </table>
+
+      <h3 class="section-heading">Insurance</h3>
+      <p>Cover is placed with AAR Insurance Kenya Limited for the period 8 June 2026 to 7 June 2027.</p>
+      <table class="data-table">
+        <thead>
+          <tr><th>Policy</th><th>What it covers</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Work injury benefit</td><td>Covers employees for death, permanent and temporary disability, medical and funeral expenses.</td></tr>
+          <tr><td>Fire and perils</td><td>Fire and allied perils cover on the business premises and contents.</td></tr>
+          <tr><td>Contractual liability</td><td>Liability arising from contracts for security services.</td></tr>
+        </tbody>
+      </table>
+
+      <h3 class="section-heading">What the annex contains</h3>
+      <p>Copies of the certificates and policy schedules are in the accompanying annex.</p>
+      <ul>
+        <li>Certificates of incorporation, name change and business name</li>
+        <li>SHA and NSSF compliance certificates</li>
+        <li>PSRA registration, PROSAK memberships and counter terrorism training</li>
+        <li>Bungoma and Kajiado county business permits</li>
+        <li>AAR insurance schedules and K9 vaccination and training records</li>
+        <li>KRA PIN and tax compliance certificate</li>
+      </ul>
+
+      <h3 class="section-heading">Why Current Security</h3>
+      <div class="values-row">
+        <div class="value-card">
+          <span class="value-name">Registered and regulated</span>
+          <span class="value-desc">PSRA-registered private security provider and a corporate member of PROSAK.</span>
+        </div>
+        <div class="value-card">
+          <span class="value-name">Vetted, trained guards</span>
+          <span class="value-desc">Selected to PSRA criteria, medically examined and given one month of training.</span>
+        </div>
+        <div class="value-card">
+          <span class="value-name">Supervised every shift</span>
+          <span class="value-desc">Three supervisor checks per guard per shift, plus unannounced spot checks.</span>
+        </div>
+        <div class="value-card">
+          <span class="value-name">Fast takeover</span>
+          <span class="value-desc">A smooth transition from your current provider within 12 hours of the contract starting.</span>
+        </div>
+        <div class="value-card">
+          <span class="value-name">Layers of protection</span>
+          <span class="value-desc">Guards, K9, CCTV, alarms and access control from one provider.</span>
+        </div>
+        <div class="value-card">
+          <span class="value-name">Fair rates, free advice</span>
+          <span class="value-desc">Quality service at affordable, competitive rates, with free security advice for existing clients.</span>
+        </div>
+      </div>
+
+      <div class="page-footer">Current Security Group Ltd · Your Desired Security Partner · Profile updated October 2026. This document is a summary; the signed contract and written assignment instructions govern the service.</div>
+    </div>
+  </div>
+
+  <!-- ============ PAGE 11: QUOTATION, FINALLY, SIGNATURE, OFFICES (NO PHOTO) ============ -->
+  <div class="page" id="page-11">
+    <div class="page-content">
+      <h2 class="section-heading">Quotation</h2>
+      <p class="quote-line" id="pf-quote-line">Customised monthly guard service for <strong><span id="pf-disp-q-name">[Name]</span></strong>, <strong><span id="pf-disp-q-address">[Address]</span></strong>. Guards work 12-hour shifts.</p>
+
+      <table class="quote-table">
+        <thead>
+          <tr><th>Service</th><th class="num">Qty</th><th class="num">Rate (KES)</th><th class="num">Monthly (KES)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Day guard service</td><td class="num">1</td><td class="num">18,000.00</td><td class="num">18,000.00</td></tr>
+          <tr><td>Night guard service</td><td class="num">1</td><td class="num">18,000.00</td><td class="num">18,000.00</td></tr>
+          <tr><td>K9 (dog service)</td><td class="num">1</td><td class="num">15,000.00</td><td class="num">15,000.00</td></tr>
+          <tr><td>Supervisor</td><td class="num">1</td><td class="num">26,000.00</td><td class="num">26,000.00</td></tr>
+          <tr class="subtotal-row"><td>&nbsp;</td><td class="num">&nbsp;</td><td class="num">Subtotal</td><td class="num">77,000.00</td></tr>
+          <tr><td>&nbsp;</td><td class="num">&nbsp;</td><td class="num">VAT at 16%</td><td class="num">12,320.00</td></tr>
+          <tr class="total-row"><td>&nbsp;</td><td class="num">&nbsp;</td><td class="num">Total payable (KES)</td><td class="num">89,320.00</td></tr>
+        </tbody>
+      </table>
+      <p class="table-note">Temporary guard service is charged at KES 2,500 per day or night, excluding VAT.</p>
+
+      <h3 class="section-heading">Finally</h3>
+      <p>Our security does not end with placing guards in your premises. We check our assignments and keep you updated on security status and threat levels, and we offer free security advisory services to our existing clients. We believe we can give you the best possible service and unmatched customer care, and we look forward to being your security partner.</p>
+
+      <div class="signature-block">
+        <img src="images/profile/signature.png" alt="Signature of Ndiema B'Kones" class="signature-img" width="390" height="92">
+        <p class="signature-name">Ndiema B&rsquo;Kones</p>
+        <p class="signature-role">Operations Director, Current Security Group Ltd</p>
+      </div>
+
+      <h3 class="section-heading">Offices and contact</h3>
+      <div class="offices-cols">
+        <div class="office-col">
+          <h3>Nairobi head office</h3>
+          <p>P.O. Box 249 (00511), Nairobi, Kenya</p>
+          <p>0106&nbsp;732&nbsp;300 · 0733&nbsp;732&nbsp;300 · 0777&nbsp;732&nbsp;300</p>
+        </div>
+        <div class="office-col">
+          <h3>Bungoma office</h3>
+          <p>P.O. Box 63 (50201), Sirisia, Bungoma</p>
+          <p>0799&nbsp;334&nbsp;449 · 0734&nbsp;334&nbsp;449 · 0737&nbsp;334&nbsp;441</p>
+        </div>
+      </div>
+      <p class="contact-line"><strong>Hotline:</strong> 0722&nbsp;732&nbsp;300 · 0737&nbsp;334&nbsp;449</p>
+      <p class="contact-line"><strong>Email:</strong> csgroup79@gmail.com · 2014current@gmail.com</p>
+
+      <div class="page-footer">Current Security Group Ltd · Your Desired Security Partner · Profile updated October 2026. This document is a summary; the signed contract and written assignment instructions govern the service.</div>
+    </div>
+  </div>
 </main>
 
 <footer class="site-footer no-print">
@@ -166,5 +1594,89 @@
   </a>
 </div>
 
+<script>
+  (function () {
+    "use strict";
+
+    var form = document.getElementById("profile-customise-form");
+    var toggleBtn = document.querySelector("[data-profile-form-toggle]");
+    var formEl = document.getElementById("profile-form");
+    var applyBtn = document.getElementById("pf-apply");
+    var clearBtn = document.getElementById("pf-clear");
+
+    var dispName = document.getElementById("pf-disp-name");
+    var dispAddress = document.getElementById("pf-disp-address");
+    var quoteLine = document.getElementById("pf-quote-line");
+
+    var nameInput = document.getElementById("pf-name");
+    var emailInput = document.getElementById("pf-email");
+    var addressInput = document.getElementById("pf-address");
+    var companyInput = document.getElementById("pf-company");
+    var phoneInput = document.getElementById("pf-phone");
+    var dateInput = document.getElementById("pf-date");
+
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, "0");
+    var mm = String(today.getMonth() + 1).padStart(2, "0");
+    var yyyy = today.getFullYear();
+    var dateStr = dd + "/" + mm + "/" + yyyy;
+    dateInput.value = yyyy + "-" + mm + "-" + dd;
+
+    toggleBtn.addEventListener("click", function () {
+      var visible = formEl.classList.toggle("is-visible");
+      toggleBtn.textContent = visible ? "Hide customisation" : "Customise profile";
+    });
+
+    function renderProfile() {
+      var name = nameInput.value.trim();
+      var address = addressInput.value.trim();
+
+      if (name && address) {
+        dispName.textContent = name;
+        dispAddress.textContent = address;
+        quoteLine.style.display = "block";
+      } else {
+        quoteLine.style.display = "none";
+      }
+    }
+
+    [nameInput, emailInput, addressInput, companyInput, phoneInput].forEach(function (input) {
+      input.addEventListener("input", renderProfile);
+    });
+
+    applyBtn.addEventListener("click", function (event) {
+      event.preventDefault();
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+      renderProfile();
+      formEl.classList.remove("is-visible");
+      toggleBtn.textContent = "Customise profile";
+    });
+
+    clearBtn.addEventListener("click", function (event) {
+      event.preventDefault();
+      form.reset();
+      dateInput.value = yyyy + "-" + mm + "-" + dd;
+      quoteLine.style.display = "none";
+    });
+
+    // Overflow check on load and beforeprint
+    function checkOverflow() {
+      var pages = document.querySelectorAll(".page");
+      pages.forEach(function (page, i) {
+        var overflow = page.scrollHeight - page.clientHeight;
+        if (overflow > 1) {
+          console.warn("Page " + (i + 1) + " overflows by " + Math.round(overflow) + " px");
+        } else {
+          console.log("Page " + (i + 1) + " OK (no overflow)");
+        }
+      });
+    }
+    window.addEventListener("load", checkOverflow);
+    window.addEventListener("beforeprint", checkOverflow);
+  })();
+</script>
 </body>
 </html>
